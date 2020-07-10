@@ -33,11 +33,19 @@ class MongoLib {
         });
     }
 
-    get(collection, id) {
+    get(collection, user_id) {
         return this.connect().then((db) => {
             return db
                 .collection(collection)
-                .findOne({ _id: ObjectId(id) })
+                .findOne({ user_id: user_id })
+        });
+    }
+
+    getWithPassword(collection, { studentToValidate }){
+        return this.connect().then((db) => {
+            return db
+                .collection(collection)
+                .findOne({ user_id: studentToValidate.user_id, user_password: studentToValidate.user_password })
         });
     }
 

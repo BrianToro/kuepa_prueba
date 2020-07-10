@@ -1,4 +1,5 @@
 import express from "express";
+import http from 'http';
 import webpack from "webpack";
 import React from "react";
 import { renderToString } from "react-dom/server";
@@ -12,7 +13,7 @@ import reducer from "../frontend/reducers";
 import getManifest from "./getManifest";
 import { config } from "./config/index.js";
 import cors from "cors";
-import { registrationAndLoginAPI } from "./controllers/routes/routes";
+import { registrationAndLoginAPI } from "./controllers/routes/api/routes";
 import {
     errorHandler,
     logErrors,
@@ -59,6 +60,7 @@ const setResponse = (html, preloadedState, manifest) => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
             <link rel="stylesheet" href=${mainStyles} type="text/css">
             <title>Prueba Tecnica Kuepa</title>
         </head>
@@ -79,9 +81,9 @@ const rederApp = async (req, res) => {
     const store = createStore(reducer, initialState);
     const preloadedState = store.getState();
     const html = renderToString(
-        <Provider store={store}>
-            <StaticRouter location={req.url} context={{}}>
-                {renderRoutes(serverRoutes)}
+        <Provider store={ store }>
+            <StaticRouter location={ req.url } context={{}}>
+                { renderRoutes(serverRoutes) }
             </StaticRouter>
         </Provider>
     );
@@ -97,6 +99,9 @@ app.use(logErrors);
 app.use(wrapErrors);
 app.use(errorHandler);
 
-app.listen(config.port || 4000, () => {
+//server for sockets
+const server = http.createServer(app);
+
+server.listen(config.port || 4000, () => {
     console.log(`Server listen on port: ${config.port}`);
 });

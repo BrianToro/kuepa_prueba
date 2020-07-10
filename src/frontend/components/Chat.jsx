@@ -4,10 +4,16 @@ import { connect } from "react-redux";
 
 const Chat = (props) => {
     return (
-        <Fragment>
-            <h1>Inicio del proyecto</h1>
-        </Fragment>
+        <div>
+            <h1>Inicio del proyecto { props.user }</h1>
+        </div>
     );
 };
 
-export default connect(null, null)(Chat);
+const mapStateToProps = (state) => {
+    return {
+        user: state.currentUser
+    };
+};
+
+export default connect(mapStateToProps, null)(Chat);
