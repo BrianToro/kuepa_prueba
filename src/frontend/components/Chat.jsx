@@ -39,7 +39,7 @@ const Chat = (props) => {
 
     return (
         <div className="container-chat">
-            <h1>Chat de {props.user}</h1>
+            <h1>Chat de la sala</h1>
             <Messages messages={messages} name={props.user}/>
             <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>

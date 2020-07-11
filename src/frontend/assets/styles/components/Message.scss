@@ -1,0 +1,35 @@
+.message-container {
+    margin-top: 20px;
+}
+
+.toLeft {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.toRight {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.message-container > .message-container-message {
+    color: white;
+    text-align: center;
+    height: auto;
+    padding: 5px;
+    width: auto;
+    background-color: #ff8000;
+    border-radius: 6px;
+}
+
+.toLeft > .message-container-name {
+    padding-top: 5px;
+    margin-left: 5px;
+}
+
+.toRight > .message-container-name {
+    padding-top: 5px;
+    margin-right: 5px;
+}
