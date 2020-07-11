@@ -12,7 +12,7 @@ const Message = ({ key, message, name }) => {
         isSentByCurrentUser
             ? (
                 <div className="message-container toRight">
-                    <p className="message-container-name">{name}</p>
+                    <p className="message-container-name">{message.time + " "}{name}{" "}{ message.user_type === 'teacher' ? <span>Profesor</span> : null }</p>
                     <div className="message-container-message">
                         <p >{message.text}</p>
                     </div>
@@ -20,7 +20,7 @@ const Message = ({ key, message, name }) => {
             )
             : (
                 <div className="message-container toLeft">
-                    <p className="message-container-name">{message.user}</p>
+                    <p className="message-container-name">{message.time + " "}{message.user}{" "}{ message.user_type === 'teacher' ? <span>Profesor</span> : null }</p>
                     <div className="message-container-message">
                         <p >{message.text}</p>
                     </div>

@@ -5,7 +5,7 @@ import { setTokenToLocalStorage } from '../helpers/token';
 
 //redux
 import { connect } from "react-redux";
-import { setUserToState } from '../actions'
+import { setUserToState, setTypeOfUserToState } from '../actions'
 //Css
 
 import "../assets/styles/Login.scss";
@@ -24,9 +24,11 @@ const Login = (props) => {
         axios.post(`/api/${typeUser}/login`, {
             user_id,
             user_password,
+            user_type: typeUser
         }).then(response => {
             if (response.status === 200) {
                 props.setUserToState(user_id);
+                props.setTypeOfUserToState(typeUser);
                 setTokenToLocalStorage(response.data.token);
                 props.history.push('/');
             }
@@ -56,7 +58,7 @@ const Login = (props) => {
                 </div>
                 <button className="button" type="submit" onClick={handleLogin}>¡Entrar!</button>
                 <div className="container-form-login-toRegister">
-                    <span>¿Aun no tienes cuenta?</span> <Link to="/register">Registrate</Link>
+                    <span>¿Aun no tienes cuenta?</span> <Link to="/register">Regístrate</Link>
                 </div>
             </form>
 
@@ -66,6 +68,7 @@ const Login = (props) => {
 
 const mapDispatchToProps = {
     setUserToState,
+    setTypeOfUserToState
 }
 
 

@@ -8,7 +8,7 @@ import Video from '../components/Video'
 
 //redux
 import { connect } from "react-redux";
-import { setUserToState } from '../actions'
+import { setUserToState, setTypeOfUserToState } from '../actions'
 
 //Css
 import "../assets/styles/App.scss";
@@ -20,6 +20,7 @@ const Main = (props) => {
             const entry = await verifyLogin();
             if (entry.access) {
                 props.setUserToState(entry.user_id);
+                props.setTypeOfUserToState(entry.user_type);
                 setLoading(false);
             } else {
                 props.history.push('/login');
@@ -35,7 +36,7 @@ const Main = (props) => {
             }
         }
         try {
-            const res = await axios.get('/api/student/verify', {
+            const res = await axios.get('/api/verify', {
                 headers: {
                     'x-access-token': token
                 }
@@ -44,7 +45,8 @@ const Main = (props) => {
             if (res.status === 202) {
                 return {
                     access: true,
-                    user_id: res.data.user_id
+                    user_id: res.data.user_id,
+                    user_type: res.data.user_type
                 }
             } else {
                 return {
@@ -68,7 +70,8 @@ const Main = (props) => {
 };
 
 const mapDispatchToProps = {
-    setUserToState
+    setUserToState,
+    setTypeOfUserToState
 }
 
 const mapStateToProps = (state) => {

@@ -20,7 +20,7 @@ import {
     logErrors,
     wrapErrors,
 } from "./controllers/middlewares/errorHandler";
-import { addUser, getUser } from './services/';
+import { addUser, getUser, ChatService} from './services/';
 
 //Inicio del servidor
 const app = express();
@@ -109,19 +109,30 @@ const io = socketio(server);
 
 io.on('connection', (socket) => {
     console.log('Connection with the socket');
-    socket.on('join', ({ user, room }, callback) => {
-        if (user) {
-            const userJoined = addUser({ id: socket.id, user, room });
-            socket.emit('message', { user: 'System', text: `Bienvenido a la clase ${userJoined.user}` });
-            socket.broadcast.to(room).emit('message', { user: 'System', text: `${userJoined.user} se ha unido a la clase` })
+    socket.on('join', ({ user, room, user_type }, callback) => {
+        if (user && user_type) {
+            const userJoined = addUser({ id: socket.id, user, room, user_type });
+
+            let time = new Date();
+            const HoursAndSecond = `${time.getHours()} : ${time.getMinutes()}`;
+
+            socket.emit('message', { user: 'System', text: `Bienvenido a la clase ${userJoined.user}`, time: HoursAndSecond });
+            socket.broadcast.to(room).emit('message', { user: 'System', text: `${userJoined.user} se ha unido a la clase`, time: HoursAndSecond });
+
             socket.join(room);
             callback();
         }
 
     })
-    socket.on('sendMessage', ({ message, user }, callback) => {
+    socket.on('sendMessage', ({ message, user, timeM }, callback) => {
+
         const userFinded = getUser(user);
-        io.to(userFinded.room).emit('message', { user: userFinded.user, text: message });
+        const messageToSend = { user: userFinded.user, text: message, user_type: userFinded.user_type, time: timeM }
+        const chatService = new ChatService();
+        const resultOfSave = chatService.saveMessage({ messageToSend });
+        resultOfSave ? console.log('Message saved') : console.log('Error saving the message');
+        io.to(userFinded.room).emit('message', messageToSend);
+
         callback();
     })
     socket.on('disconnect', () => {

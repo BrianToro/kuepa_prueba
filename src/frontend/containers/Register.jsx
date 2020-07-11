@@ -5,7 +5,7 @@ import { setTokenToLocalStorage } from '../helpers/token';
 
 //redux
 import { connect } from "react-redux";
-import { setUserToState } from '../actions'
+import { setUserToState, setTypeOfUserToState } from '../actions'
 
 //Css
 import "../assets/styles/Register.scss";
@@ -28,6 +28,7 @@ const Register = (props) => {
         }).then(response => {
             if (response.status === 201) {
                 props.setUserToState(user_id);
+                props.setTypeOfUserToState('student');
                 setTokenToLocalStorage(response.data.token);
                 props.history.push('/');
             }
@@ -67,7 +68,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    setUserToState
+    setUserToState,
+    setTypeOfUserToState
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

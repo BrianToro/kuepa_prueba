@@ -14,7 +14,7 @@ const Chat = (props) => {
     let socket = io(END_POINT);;
 
     useEffect(() => {
-        socket.emit('join', { user: props.user, room: 'chat' }, () => {
+        socket.emit('join', { user: props.user, room: 'chat', user_type: props.user_type }, () => {
 
         });
 
@@ -22,7 +22,7 @@ const Chat = (props) => {
             socket.emit('disconnect');
             socket.off();
         }
-    }, [END_POINT, props.user]);
+    }, [END_POINT, props.user, props.user_type]);
 
     useEffect(() => {
         socket.on('message', (message) => {
@@ -33,7 +33,9 @@ const Chat = (props) => {
     const sendMessage = (event) => {
         event.preventDefault()
         if(message){
-            socket.emit('sendMessage', { message, user: props.user }, () => setMessage(''))
+            let time = new Date();
+            const HoursAndSecond = `${time.getHours()} : ${time.getMinutes()}`;
+            socket.emit('sendMessage', { message, user: props.user, timeM: HoursAndSecond }, () => setMessage(''))
         }
     }
 
@@ -48,7 +50,8 @@ const Chat = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.currentUser
+        user: state.currentUser,
+        user_type: state.typeOfUser
     };
 };
 

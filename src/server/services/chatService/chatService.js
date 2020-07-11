@@ -1,25 +1,20 @@
-const users = [];
+const MongoLib = require('../../libs/mongo');
 
-const addUser = (user) => {
-    users.push(user);
-    return user;
-}
+class ChatService {
 
-const removeUser = (user) => {
-    const index = users.findIndex(user);
-    if (index !== -1){
-        return users.splice(index, 1)[0];
+    constructor(usersRepository = new MongoLib()) {
+        this.collection = 'messages';
+        this.mongoDB = usersRepository;
+    }
+
+    async saveMessage({ messageToSend }) {
+        const idMessage = await this.mongoDB.create(this.collection, messageToSend);
+        if(idMessage){
+            return true
+        } else {
+            return false
+        }
     }
 }
 
-const getUser = (user) => {
-    return users.find(user_ => {
-        return user_.user === user
-    });
-}
-
-module.exports = {
-    addUser,
-    removeUser,
-    getUser
-}
+module.exports = ChatService;
