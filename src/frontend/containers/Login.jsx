@@ -1,10 +1,13 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { setTokenToLocalStorage } from '../helpers/token';
+
 //redux
 import { connect } from "react-redux";
 import { setUserToState } from '../actions'
 //Css
+
 import "../assets/styles/Login.scss";
 
 const Login = (props) => {
@@ -14,12 +17,17 @@ const Login = (props) => {
 
     const handleLogin = (event) => {
         event.preventDefault();
+        if (!(user_id && user_password)){
+            alert('¡Rellena todos los campos para poder iniciar sesion!');
+            return
+        }
         axios.post(`/api/${typeUser}/login`, {
             user_id,
             user_password,
         }).then(response => {
             if (response.status === 200) {
                 props.setUserToState(user_id);
+                setTokenToLocalStorage(response.data.token);
                 props.history.push('/');
             }
         }).catch(response => {
@@ -59,7 +67,7 @@ const Login = (props) => {
 };
 
 const mapDispatchToProps = {
-    setUserToState
+    setUserToState,
 }
 
 

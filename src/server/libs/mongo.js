@@ -41,14 +41,6 @@ class MongoLib {
         });
     }
 
-    getWithPassword(collection, user_id){
-        return this.connect().then((db) => {
-            return db
-                .collection(collection)
-                .findOne({ user_id: user_id })
-        });
-    }
-
     create(collection, data) {
         return this.connect()
             .then((db) => {

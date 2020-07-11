@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { setTokenToLocalStorage } from '../helpers/token';
 
 //redux
 import { connect } from "react-redux";
@@ -16,6 +17,10 @@ const Register = (props) => {
 
     const handleRegister = (event) => {
         event.preventDefault();
+        if (!(user_id && user_name && user_password)){
+            alert('¡Rellena todos los campos para poder registrarte!');
+            return
+        }
         axios.post('/api/student/register', {
             user_id,
             user_name,
@@ -23,6 +28,7 @@ const Register = (props) => {
         }).then(response => {
             if (response.status === 201) {
                 props.setUserToState(user_id);
+                setTokenToLocalStorage(response.data.token);
                 props.history.push('/');
             }
         }).catch(response => handlerUserExist());

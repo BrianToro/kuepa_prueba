@@ -22,10 +22,9 @@ class StudentsService {
     }
 
     async login({ studentToValidate }){
-        const askForUserExist = await this.mongoDB.getWithPassword(this.collection, studentToValidate.user_id);
+        const askForUserExist = await this.mongoDB.get(this.collection, studentToValidate.user_id);
         if(askForUserExist){
             const passwordValidate = await this.validatePassword(studentToValidate.user_password, askForUserExist.user_password);
-            console.log(passwordValidate);
             if(passwordValidate){
                 return askForUserExist;    
             }
@@ -35,8 +34,6 @@ class StudentsService {
     }
 
     async validatePassword(user_password, hashedPassword){
-        console.log(user_password);
-        console.log(hashedPassword);
         return bcrypt.compare(user_password, hashedPassword);
     }
 

@@ -1,5 +1,6 @@
 import express from "express";
 import http from 'http';
+import socketio from 'socket.io';
 import webpack from "webpack";
 import React from "react";
 import { renderToString } from "react-dom/server";
@@ -19,6 +20,7 @@ import {
     logErrors,
     wrapErrors,
 } from "./controllers/middlewares/errorHandler";
+import { addUser, removeUser, getUser } from './services/chatService';
 
 //Inicio del servidor
 const app = express();
@@ -81,9 +83,9 @@ const rederApp = async (req, res) => {
     const store = createStore(reducer, initialState);
     const preloadedState = store.getState();
     const html = renderToString(
-        <Provider store={ store }>
-            <StaticRouter location={ req.url } context={{}}>
-                { renderRoutes(serverRoutes) }
+        <Provider store={store}>
+            <StaticRouter location={req.url} context={{}}>
+                {renderRoutes(serverRoutes)}
             </StaticRouter>
         </Provider>
     );
@@ -101,6 +103,31 @@ app.use(errorHandler);
 
 //server for sockets
 const server = http.createServer(app);
+
+//socket coneections
+const io = socketio(server);
+
+io.on('connection', (socket) => {
+    console.log('Connection with the socket');
+    socket.on('join', ({ user, room }, callback) => {
+        if (user) {
+            const userJoined = addUser({ id: socket.id, user, room });
+            socket.emit('message', { user: 'System', text: `Bienvenido a la clase ${userJoined.user}` });
+            socket.broadcast.to(room).emit('message', { user: 'System', text: `${userJoined.user} se ha unido a la clase` })
+            socket.join(room);
+            callback();
+        }
+
+    })
+    socket.on('sendMessage', ({ message, user }, callback) => {
+        const userFinded = getUser(user);
+        io.to(userFinded.room).emit('message', { user: userFinded.user, text: message });
+        callback();
+    })
+    socket.on('disconnect', () => {
+        console.log('Disconnected from socket');
+    })
+})
 
 server.listen(config.port || 4000, () => {
     console.log(`Server listen on port: ${config.port}`);

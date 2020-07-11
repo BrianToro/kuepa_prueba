@@ -1,6 +1,8 @@
 const express = require("express");
+const jwt = require('jsonwebtoken');
 const StudentsService = require("../../../services/studentsService");
 const TeachersService = require("../../../services/teachersService");
+const { config } = require('../../../config')
 const { check, validationResult } = require("express-validator");
 
 function registrationAndLoginAPI(app) {
@@ -28,16 +30,16 @@ function registrationAndLoginAPI(app) {
                     return res.status(422).json({ message: "validation not pass", success: "not ok", errors: errors.array() })
                 }
                 const resultOfRegister = await studentsService.register({ studentToRegister })
-                console.log(resultOfRegister);
                 if (!resultOfRegister) {
                     res.status(406).json({
                         message: "user exist",
                         success: false
                     })
                 } else {
+                    const token = jwt.sign({ user_id: studentToRegister.user_id }, config.jwt_key, { expiresIn: 60 * 60 * 24 });
                     res.status(201).json({
                         message: "student created",
-                        id: resultOfRegister,
+                        token: token,
                         success: true
                     })
                 }
@@ -59,9 +61,11 @@ function registrationAndLoginAPI(app) {
 
                 const resultOfValidate = await studentsService.login({ studentToValidate });
                 if (resultOfValidate) {
+                    const token = jwt.sign({ user_id: resultOfValidate.user_id }, config.jwt_key, { expiresIn: 60 * 60 * 24 });
                     res.status(200).json({
                         message: "student found",
-                        success: true
+                        success: true,
+                        token,
                     })
                 } else {
                     res.status(404).json({
@@ -74,6 +78,20 @@ function registrationAndLoginAPI(app) {
             }
 
         });
+
+    router.get('/student/verify', async (req, res, next) => {
+        const token = req.headers['x-access-token'];
+        try {
+            const decodeToken = jwt.verify(token, config.jwt_key);
+            res.status(202).json({
+                success: true,
+                user_id: decodeToken.user_id
+            })
+        } catch (err) {
+            next(err);
+        }
+
+    });
 
 }
 
