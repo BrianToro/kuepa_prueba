@@ -17,7 +17,7 @@ const Register = (props) => {
 
     const handleRegister = (event) => {
         event.preventDefault();
-        if (!(user_id && user_name && user_password)){
+        if (!(user_id && user_name && user_password)) {
             alert('¡Rellena todos los campos para poder registrarte!');
             return
         }
@@ -39,26 +39,24 @@ const Register = (props) => {
     }
 
     return (
-        <Fragment>
-            <div>
-                <div className="container-form-register">
-                    <form>
-                        <h1>Bienvenido al aula virtual</h1>
-                        <h4>Registrate con el siguiente formulario</h4>
-                        <label htmlFor="user_id">Usuario</label>
-                        <input type="text" name="user_id" required placeholder="Tiene que ser unico" onChange={(event) => setUserId(event.target.value)} />
-                        <label htmlFor="user_name">Nombre</label>
-                        <input type="text" name="user_name" required onChange={(event) => setUserName(event.target.value)} />
-                        <label htmlFor="user_id">Contraseña</label>
-                        <input type="password" name="user_password" required placeholder="Minimo 8 caracteres" onChange={(event) => setUserPassword(event.target.value)} />
-                        <button className="button" type="submit" onClick={handleRegister}>¡Registrarse!</button>
-                        <div className="container-form-register-toLogin">
-                            <span>¿Ya tienes cuenta?</span> <Link to="/login">Inicia sesion</Link>
-                        </div>
-                    </form>
-                </div>
+        <div>
+            <div className="container-form-register">
+                <form onKeyPress={event => event.key === 'Enter' ? handleRegister(event) : null}>
+                    <h1>Bienvenido al aula virtual</h1>
+                    <h4>Registrate con el siguiente formulario</h4>
+                    <label htmlFor="user_id">Usuario</label>
+                    <input type="text" name="user_id" required placeholder="Tiene que ser unico" onChange={(event) => setUserId(event.target.value)} />
+                    <label htmlFor="user_name">Nombre</label>
+                    <input type="text" name="user_name" required onChange={(event) => setUserName(event.target.value)} />
+                    <label htmlFor="user_id">Contraseña</label>
+                    <input type="password" name="user_password" required placeholder="Minimo 8 caracteres" onChange={(event) => setUserPassword(event.target.value)} />
+                    <button className="button" type="submit" onClick={handleRegister}>¡Registrarse!</button>
+                    <div className="container-form-register-toLogin">
+                        <span>¿Ya tienes cuenta?</span> <Link to="/login">Inicia sesion</Link>
+                    </div>
+                </form>
             </div>
-        </Fragment>
+        </div>
     );
 };
 

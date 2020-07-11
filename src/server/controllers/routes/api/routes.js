@@ -1,7 +1,6 @@
 const express = require("express");
 const jwt = require('jsonwebtoken');
-const StudentsService = require("../../../services/studentsService");
-const TeachersService = require("../../../services/teachersService");
+const { TeachersService, StudentsService }= require("../../../services/");
 const { config } = require('../../../config')
 const { check, validationResult } = require("express-validator");
 

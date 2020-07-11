@@ -1,6 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import io from 'socket.io-client';
 import { connect } from "react-redux";
+import Input from '../components/Input';
+import Messages from '../components/Messages';
+
+import '../assets/styles/components/Chat.scss';
 
 
 const Chat = (props) => {
@@ -33,17 +37,11 @@ const Chat = (props) => {
         }
     }
 
-    console.log(messages);
-
     return (
-        <div>
+        <div className="container-chat">
             <h1>Chat de {props.user}</h1>
-            <input
-                type="text"
-                value={ message }
-                onChange={ event => setMessage(event.target.value) }
-                onKeyPress={ event => event.key === 'Enter' ? sendMessage(event) : null }
-            />
+            <Messages messages={messages} name={props.user}/>
+            <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
     );
 };

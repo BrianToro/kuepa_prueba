@@ -4,7 +4,7 @@ import { getTokenFromLocalStorage } from '../helpers/token';
 
 import Chat from "../components/Chat";
 import Header from '../components/Header';
-
+import Video from '../components/Video'
 
 //redux
 import { connect } from "react-redux";
@@ -57,12 +57,13 @@ const Main = (props) => {
     }
 
     return (
-        <Fragment>
-            <div>
-                <Header history={props.history}/>
+        <div>
+            <Header history={props.history} />
+            <main>
+                <Video />
                 <Chat user={props.user} />
-            </div>
-        </Fragment>
+            </main>
+        </div>
     );
 };
 

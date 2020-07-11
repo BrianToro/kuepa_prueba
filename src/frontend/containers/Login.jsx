@@ -17,7 +17,7 @@ const Login = (props) => {
 
     const handleLogin = (event) => {
         event.preventDefault();
-        if (!(user_id && user_password)){
+        if (!(user_id && user_password)) {
             alert('¡Rellena todos los campos para poder iniciar sesion!');
             return
         }
@@ -40,29 +40,27 @@ const Login = (props) => {
     }
 
     return (
-        <Fragment>
-            <div className="container-form-login">
-                <form>
-                    <h1>Bienvenido al aula virtual</h1>
-                    <h4>Accede iniciando sesion</h4>
-                    <label htmlFor="user_id">Usuario</label>
-                    <input type="text" name="user_id" onChange={(event) => setUserId(event.target.value)} required />
-                    <label htmlFor="user_id">Contraseña</label>
-                    <input type="password" name="user_password" onChange={(event) => setUserPassword(event.target.value)} required />
-                    <div className="radio-checks" onChange={ event => setTypeUser(event.target.value) }>
-                        <label htmlFor="type">Soy Estudiante</label>
-                        <input type="radio" name="type" value="student"/>
-                        <label htmlFor="type">Soy Profesor</label>
-                        <input type="radio" name="type" value="teacher"/>
-                    </div>
-                    <button className="button" type="submit" onClick={handleLogin}>¡Entrar!</button>
-                    <div className="container-form-login-toRegister">
-                        <span>¿Aun no tienes cuenta?</span> <Link to="/register">Registrate</Link>
-                    </div>
-                </form>
+        <div className="container-form-login">
+            <form onKeyPress={event => event.key === 'Enter' ? handleLogin(event) : null}>
+                <h1>Bienvenido al aula virtual</h1>
+                <h4>Accede iniciando sesion</h4>
+                <label htmlFor="user_id">Usuario</label>
+                <input type="text" name="user_id" onChange={(event) => setUserId(event.target.value)} required />
+                <label htmlFor="user_id">Contraseña</label>
+                <input type="password" name="user_password" onChange={(event) => setUserPassword(event.target.value)} required />
+                <div className="radio-checks" onChange={event => setTypeUser(event.target.value)}>
+                    <label htmlFor="type">Soy Estudiante</label>
+                    <input type="radio" name="type" value="student" />
+                    <label htmlFor="type">Soy Profesor</label>
+                    <input type="radio" name="type" value="teacher" />
+                </div>
+                <button className="button" type="submit" onClick={handleLogin}>¡Entrar!</button>
+                <div className="container-form-login-toRegister">
+                    <span>¿Aun no tienes cuenta?</span> <Link to="/register">Registrate</Link>
+                </div>
+            </form>
 
-            </div>
-        </Fragment>
+        </div>
     );
 };
 

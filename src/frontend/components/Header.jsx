@@ -11,12 +11,10 @@ const Header = (props) => {
 
     }
     return (
-        <div>
-            <nav className="navbar">
-                <h1>Prueba tecnica</h1>
-                <span onClick={handleDisconnect}>Desconectarse</span>
-            </nav>
-        </div>
+        <nav className="navbar">
+            <h1>Prueba tecnica</h1>
+            <span onClick={handleDisconnect}>Desconectarse</span>
+        </nav>
     );
 };
 

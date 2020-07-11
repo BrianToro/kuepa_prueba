@@ -20,7 +20,7 @@ import {
     logErrors,
     wrapErrors,
 } from "./controllers/middlewares/errorHandler";
-import { addUser, removeUser, getUser } from './services/chatService';
+import { addUser, getUser } from './services/';
 
 //Inicio del servidor
 const app = express();
