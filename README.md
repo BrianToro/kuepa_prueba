@@ -9,7 +9,7 @@ Esta aplicacion web esta conectada con una base de datos MongoDB asi que para ha
 
 La base de datos debera tener 3 colecciones (students, teachers, messages) para poder funcionar.
 
-**La variable de entorno `ENV` puede ser prodution o development**
+**La variable de entorno `ENV` puede ser production o development**
 
 En el `package.json` estan listadas todas las dependencias que utiliza la aplicacion y los scripts que se pueden ejecutar, con un simple `npm install` deberas poder ejecutar el servidor en modo produccion con el comando `npm run start:dev`
 
