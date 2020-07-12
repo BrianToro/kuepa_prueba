@@ -4,13 +4,13 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border-bottom: 1px solid #ff8000;
+    border-bottom: 1px solid #F86433;
 }
 
 .navbar > h1 {
     width: 20%;
     color: white;
-    background-color: #ff8000;
+    background-color: #F86433;
     padding: 5px 20px;
     font-size: 1.5rem;
     text-align: center;
@@ -19,7 +19,7 @@
 .navbar > span {
     width: 80%;
     text-align: right;
-    color: #ff8000;
+    color: #F86433;
     font-size: 1.3rem;
     cursor: pointer;
     padding: 5px 20px;
