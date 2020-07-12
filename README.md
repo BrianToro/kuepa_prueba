@@ -33,3 +33,4 @@ Claro que si te registraste podras acceder como estudiante.
 ## Notas importantes
 
 * La aplicacion **no es responsive** asi que solo funcionara adecuadamente en la pantalla de un PC 
+* Puedes ejecutar la aplicacion con Docker haciendo uso del Dockerfile
