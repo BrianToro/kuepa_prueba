@@ -79,7 +79,9 @@ const setResponse = (html, preloadedState, manifest) => {
 };
 
 const rederApp = async (req, res) => {
-    let initialState = {};
+    let initialState = {
+        url: config.url
+    };
     const store = createStore(reducer, initialState);
     const preloadedState = store.getState();
     const html = renderToString(

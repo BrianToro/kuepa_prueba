@@ -24,7 +24,8 @@ const Register = (props) => {
         axios.post('/api/student/register', {
             user_id,
             user_name,
-            user_password
+            user_password,
+            user_type: 'student'
         }).then(response => {
             if (response.status === 201) {
                 props.setUserToState(user_id);

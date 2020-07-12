@@ -10,7 +10,7 @@ import '../assets/styles/components/Chat.scss';
 const Chat = (props) => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
-    const END_POINT = `https://realtimechat-brian.herokuapp.com/`;
+    const END_POINT = `${props.url}`;
     let socket = io(END_POINT);;
 
     useEffect(() => {
@@ -51,7 +51,8 @@ const Chat = (props) => {
 const mapStateToProps = (state) => {
     return {
         user: state.currentUser,
-        user_type: state.typeOfUser
+        user_type: state.typeOfUser,
+        url: state.url
     };
 };
 
