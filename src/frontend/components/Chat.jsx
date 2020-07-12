@@ -10,7 +10,7 @@ import '../assets/styles/components/Chat.scss';
 const Chat = (props) => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
-    const END_POINT = 'http://localhost:4000/';
+    const END_POINT = `https://realtimechat-brian.herokuapp.com/`;
     let socket = io(END_POINT);;
 
     useEffect(() => {

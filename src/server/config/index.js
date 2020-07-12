@@ -8,6 +8,7 @@ const config = {
     dbPassword: process.env.DB_PASSWORD,
     dbHost: process.env.DB_HOST,
     dbName: process.env.DB_NAME,
+    url: process.env.URL,
     jwt_key: process.env.SECRET_TOKEN,
 }
 
