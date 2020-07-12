@@ -77,5 +77,3 @@ dist/
 
 #bundle
 src/server/public
-
-test/
