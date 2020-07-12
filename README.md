@@ -11,7 +11,7 @@ La base de datos debera tener 3 colecciones (students, teachers, messages) para 
 
 **La variable de entorno `ENV` puede ser production o development**
 
-En el `package.json` estan listadas todas las dependencias que utiliza la aplicacion y los scripts que se pueden ejecutar, con un simple `npm install` deberas poder ejecutar el servidor en modo produccion con el comando `npm run start:dev`
+En el `package.json` estan listadas todas las dependencias que utiliza la aplicacion y los scripts que se pueden ejecutar, con un simple `npm install` deberas poder ejecutar el servidor en modo desarrollo con el comando `npm run start:dev`
 
 -> Para correr la suit de prueba unitarias `npm run test` 
 
