@@ -1,5 +1,4 @@
 import fs from "fs";
-import { get } from "http";
 
 const getManifest = () => {
     try {
